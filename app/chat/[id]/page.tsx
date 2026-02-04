@@ -10,7 +10,7 @@ type Props = {
 export default async function ChatPage({ params }: Props) {
   const { id } = await params;
   return (
-    <div className="flex flex-col h-screen overflow-hidden text-white">
+    <div className="flex flex-col h-screen text-white py-5">
       {/* Chat */}
       <Chat chatId={id} />
       {/* Chat Input */}

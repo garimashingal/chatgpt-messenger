@@ -34,11 +34,9 @@ export default async function handler(
     user: {
       _id: "ChatGPT",
       name: "ChatGPT",
-      avatar: "chatgpt-logo.png",
+      avatar: "/chatgpt-logo.png",
     },
   };
-
-  console.log("Response from ChatGPT:", response);
 
   await adminDb
     .collection("users")

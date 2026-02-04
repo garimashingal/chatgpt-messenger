@@ -27,22 +27,29 @@ export default function Sidebar() {
     <div className="p-2 flex flex-col h-screen bg-[#202123] text-white max-w-sm overflow-y-auto md:min-w-[20rem] ">
       <div className="flex-1">
         <div>
-          {/* New Chat*/}
           <NewChat />
-          <div>
-            {/* Chat Models */}
+
+          <div className="hidden sm:inline">
             <ChatModels />
           </div>
-          {/* Chat List */}
-          {chats?.docs.map((chat) => (
-            <ChatRow key={chat.id} id={chat.id} />
-          ))}
+
+          <div className="flex flex-col space-y-2 my-2">
+            {loading && (
+              <div className="animate-pulse text-center text-white">
+                Loading Chats...
+              </div>
+            )}
+            {/* Chat List */}
+            {chats?.docs.map((chat) => (
+              <ChatRow key={chat.id} id={chat.id} />
+            ))}
+          </div>
         </div>
       </div>
 
       {session && (
         <img
-          src={session.user?.image || " "}
+          src={session?.user?.image || " "}
           alt="Profile Picture"
           className="h-12 w-12 rounded-full mb-2 mx-auto cursor-pointer hover:opacity-50"
           onClick={() => {

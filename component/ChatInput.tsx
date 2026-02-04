@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Message } from "../typings";
 import { db } from "../firebase";
 import toast from "react-hot-toast";
+import ChatModels from "./ChatModels";
+import useSWR from "swr";
 
 type Props = { chatId: string };
 
@@ -18,7 +20,9 @@ function ChatInput({ chatId }: Props) {
   console.log("User Image:", userImage);
 
   //useSWR to get the model
-  const model = "gpt-5-nano"; //default model
+  const { data: model } = useSWR("model", {
+    fallbackData: "gpt-5-nano",
+  });
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +39,7 @@ function ChatInput({ chatId }: Props) {
         name: userName!,
         avatar:
           userImage! ||
-          `https://ui-avatars.com/api/?name=${session.data?.user?.name}`,
+          `https://ui-avatars.com/api/?name=${session?.data?.user?.name}`,
       },
     };
 
@@ -79,9 +83,13 @@ function ChatInput({ chatId }: Props) {
           type="submit"
           disabled={!session || !prompt}
         >
-          <PaperAirplaneIcon className="h-5 w-5 text-gray-300 hover:text-gray-400 cursor-pointer -rotate-45 disabled:text-gray-50 disabled:cursor-not-allowed" />
+          <PaperAirplaneIcon className="h-10 w-10 text-gray-300 hover:text-gray-400 cursor-pointer -rotate-45 disabled:text-gray-50 disabled:cursor-not-allowed rounded-full p-3 bg-[#11a37f]" />
         </button>
       </form>
+
+      <div className="md:hidden">
+        <ChatModels />
+      </div>
     </div>
   );
 }
