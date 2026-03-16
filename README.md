@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ChatGPT Messenger 🤖
 
-## Getting Started
+A modern, real-time chat application built with **Next.js**, **TailwindCSS**, **Firebase**, and **OpenAI**. This project clones the core functionality of ChatGPT with a premium, responsive interface and persistent chat history.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- **Real-time Chat**: Powered by Firestore for instant message updates across devices.
+- **AI Integration**: Powered by OpenAI's API to provide intelligent responses.
+- **Chat History**: Messages and chat sessions are stored securely in Firebase.
+- **Authentication**: Secure login using Google Authentication via NextAuth.
+- **Model Selection**: Switch between different OpenAI models for your chat needs.
+- **Notifications**: Real-time feedback with `react-hot-toast` (e.g., when ChatGPT is thinking).
+- **Responsive Design**: Mobile-friendly UI built with TailwindCSS.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16+](https://nextjs.org/) (App Router)
+- **Styling**: [TailwindCSS 4](https://tailwindcss.com/)
+- **State Management**: [SWR](https://swr.vercel.app/) (Data fetching)
+- **Backend / Database**: [Firebase](https://firebase.google.com/) (Firestore)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **AI Engine**: [OpenAI API](https://openai.com/api/)
+- **Icons**: [Heroicons](https://heroicons.com/)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **Node.js**: v18.17.0 or higher
+- **Firebase Project**: A Firebase project with Firestore and Google Authentication enabled.
+- **OpenAI Account**: An OpenAI API key.
+
+### 2. Environment Variables
+Create a `.env.local` file in the root directory and add the following keys:
+
+```env
+# OpenAI
+OPENAI_API_KEY=your_openai_api_key
+
+# Firebase Client
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+GOOGLE_ID=your_google_client_id
+GOOGLE_SECRET=your_google_client_secret
+
+# Firebase Admin (Optional, for server-side operations)
+FIREBASE_SERVICE_ACCOUNT_KEY=...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Running Locally
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📂 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `app/`: Next.js App Router pages and layouts.
+- `component/`: Reusable React components (Sidebar, Chat, Login, etc.).
+- `lib/`: Utility functions and shared logic.
+- `pages/api/`: Server-side API routes for OpenAI integration.
+- `firebase.ts`: Firebase client configuration.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+This project is open-source. Feel free to use and modify it for your own learning!
