@@ -10,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | { error: string }>
 ) {
   const { prompt, chatId, model, session } = req.body;
 
@@ -23,28 +23,33 @@ export default async function handler(
   }
   //ChatGPT Query
 
-  const response = await query(prompt, chatId, model);
+  try {
+    const response = await query(prompt, chatId, model);
 
-  const message: Message = {
-    text:
-      typeof response === "undefined" || response === null
-        ? "Sorry, ChatGPT could not find an answer!"
-        : response,
-    createdAt: admin.firestore.Timestamp.now(),
-    user: {
-      _id: "ChatGPT",
-      name: "ChatGPT",
-      avatar: "/chatgpt-logo.png",
-    },
-  };
+    const message: Message = {
+      text:
+        typeof response === "undefined" || response === null
+          ? "Sorry, ChatGPT could not find an answer!"
+          : response,
+      createdAt: admin.firestore.Timestamp.now(),
+      user: {
+        _id: "ChatGPT",
+        name: "ChatGPT",
+        avatar: "/chatgpt-logo.png",
+      },
+    };
 
-  await adminDb
-    .collection("users")
-    .doc(session?.data?.user?.email)
-    .collection("chats")
-    .doc(chatId)
-    .collection("messages")
-    .add(message);
+    await adminDb
+      .collection("users")
+      .doc(session?.data?.user?.email)
+      .collection("chats")
+      .doc(chatId)
+      .collection("messages")
+      .add(message);
 
-  res.status(200).json({ answer: message.text });
+    res.status(200).json({ answer: message.text });
+  } catch (error: any) {
+    console.error("OpenAI Query Error:", error);
+    res.status(500).json({ error: error.message || "Something went wrong!" });
+  }
 }

@@ -12,14 +12,19 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | { error: string }>
 ) {
-  const models = await openai.models.list().then((res) => res.data);
+  try {
+    const models = await openai.models.list().then((res) => res.data);
 
-  const modelOptions = models.map((model) => ({
-    value: model.id,
-    label: model.id,
-  }));
+    const modelOptions = models.map((model) => ({
+      value: model.id,
+      label: model.id,
+    }));
 
-  res.status(200).json({ modelOptions });
+    res.status(200).json({ modelOptions });
+  } catch (error: any) {
+    console.error("OpenAI Models List Error:", error);
+    res.status(500).json({ error: error.message || "Failed to fetch models" });
+  }
 }
