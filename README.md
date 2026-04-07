@@ -52,8 +52,9 @@ NEXTAUTH_SECRET=your_nextauth_secret
 GOOGLE_ID=your_google_client_id
 GOOGLE_SECRET=your_google_client_secret
 
-# Firebase Admin (Optional, for server-side operations)
-FIREBASE_SERVICE_ACCOUNT_KEY=...
+# Firebase Admin (server-side only)
+# Paste the full service account JSON as a single-line string.
+FIREBASE_SERVICE_ACCOUNT_KEY={"type":"...","project_id":"...",...}
 ```
 
 ### 3. Installation

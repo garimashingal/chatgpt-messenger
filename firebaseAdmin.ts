@@ -1,10 +1,17 @@
 import admin from "firebase-admin";
 import { getApps, initializeApp, cert } from "firebase-admin/app";
-import serviceAccountJson from "./serviceAccountKey.json";
 
-const serviceAccount = serviceAccountJson as admin.ServiceAccount;
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT_KEY || "{}",
+) as admin.ServiceAccount;
 
 if (!getApps().length) {
+  if (!serviceAccount || !Object.keys(serviceAccount).length) {
+    throw new Error(
+      "FIREBASE_SERVICE_ACCOUNT_KEY is not set. Add it to your environment variables.",
+    );
+  }
+
   initializeApp({
     credential: cert(serviceAccount),
   });
