@@ -41,7 +41,7 @@ export default async function handler(
 
     await adminDb
       .collection("users")
-      .doc(session?.data?.user?.email)
+      .doc(session?.user?.email)
       .collection("chats")
       .doc(chatId)
       .collection("messages")
@@ -49,7 +49,7 @@ export default async function handler(
 
     res.status(200).json({ answer: message.text });
   } catch (error: any) {
-    console.error("OpenAI Query Error:", error);
+    console.error("DETAILED ERROR IN askQuestion:", error?.response?.data || error.message || error);
     res.status(500).json({ error: error.message || "Something went wrong!" });
   }
 }

@@ -21,7 +21,7 @@ function ChatInput({ chatId }: Props) {
 
   //useSWR to get the model
   const { data: model } = useSWR("model", {
-    fallbackData: "gpt-5-nano",
+    fallbackData: "gpt-3.5-turbo",
   });
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,7 +59,7 @@ function ChatInput({ chatId }: Props) {
         prompt: input,
         chatId,
         model,
-        session,
+        session: session.data,
       }),
     }).then(() => {
       // Toast notification for success can be added here

@@ -23,8 +23,9 @@ export default async function handler(
     }));
 
     res.status(200).json({ modelOptions });
-  } catch (error: any) {
-    console.error("OpenAI Models List Error:", error);
-    res.status(500).json({ error: error.message || "Failed to fetch models" });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to fetch models";
+    console.error("DETAILED ERROR IN getEngines:", error);
+    res.status(500).json({ error: errorMessage });
   }
 }

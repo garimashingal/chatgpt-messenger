@@ -6,7 +6,7 @@ const fetchModels = () => fetch("/api/getEngines").then((res) => res.json());
 export default function ChatModels() {
   const { data: modelOptions, isLoading } = useSWR("models", fetchModels);
   const { data: model, mutate: setModel } = useSWR("model", {
-    fallbackData: "gpt-5-nano",
+    fallbackData: "gpt-3.5-turbo",
   });
 
   if (!modelOptions) {
